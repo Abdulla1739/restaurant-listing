@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import NavBar from "../components/NavBar";
 import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
 import Card from "react-bootstrap/Card";
 
 const View = () => {
@@ -19,21 +18,15 @@ const View = () => {
     setActiveButton("What You Get");
   };
 
-  const [resturant, setResturant] = useState(null);
-  const { allProducts } = useSelector((state) => state.productReducer);
-
-  if (allProducts) {
-    localStorage.setItem("allProducts", JSON.stringify(allProducts));
-  }
+  const [resturant, setResturant] = useState();
 
   useEffect(() => {
-    if (allProducts) {
-      const foundResturant = allProducts.find(
-        (item) => item.id === parseInt(id)
-      );
-      setResturant(foundResturant);
+    if (localStorage.getItem("allProducts")) {
+      const foundResturant = JSON.parse(localStorage.getItem("allProducts"));
+
+      setResturant(foundResturant.find((item) => item.id == id));
     }
-  }, [id, allProducts]);
+  }, []);
 
   if (!resturant) {
     return <div>Loading...</div>;

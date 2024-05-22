@@ -7,6 +7,7 @@ export const fetchProducts = createAsyncThunk(
     const result = await axios.get(
       "https://restopedia-redux-app-server.onrender.com/restaurants"
     );
+    localStorage.setItem("allProducts", JSON.stringify(result.data));
     return result.data;
   }
 );
